@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>바로시작 · 내 날짜 일정 (시제품)</title>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>바로시작 시제품</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{--ink:#14181f;--ink2:#3b4350;--mut:#7a8290;--line:#e6e8ee;--bg:#f4f5f8;--pri:#2f55e0;--pri2:#eaeefc;--pri3:#d9e1fb;--bad:#b42323;--bad2:#fde7e7;--warn:#a65b06;--warn2:#fdf1dc}
@@ -23,9 +23,16 @@ section.t{display:none}section.t.on{display:block}
 .opts{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.opts button{font:inherit;font-size:13.5px;font-weight:600;border:1.5px solid var(--pri3);color:var(--pri);background:#fff;border-radius:999px;padding:7px 13px;cursor:pointer}
 .res{max-width:760px;margin-top:14px}.btn{display:inline-block;font:inherit;font-weight:700;font-size:14px;padding:10px 16px;border-radius:12px;background:var(--pri);color:#fff;border:0;cursor:pointer;margin-top:6px}
 table.rp{border-collapse:collapse;width:100%;background:#fff;font-size:13px}table.rp th,table.rp td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.55}table.rp th{background:#f4f6fb}
+.board{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;max-width:760px;margin-bottom:14px}
+.stamp{aspect-ratio:1/1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:11.5px;font-weight:700;line-height:1.25;padding:6px;border:2px dashed #cdd2db;color:#a0a7b4;background:#fff}
+.stamp.g{border:3px solid #a7adb8;background:#f3f4f7;color:#4b5260}.stamp.b{border:3px solid var(--pri);background:var(--pri2);color:var(--pri)}.stamp.y{border:3px solid #e9c868;background:radial-gradient(circle at 30% 25%,#fffbe8,#f7e9b5);color:#9a6b00;transform:rotate(-6deg)}
+.mission{background:#fff;border:1.5px solid var(--pri);border-radius:16px;padding:16px 18px;max-width:760px}.mission h3{margin:0 0 4px;font-size:17px}.mission p{margin:0 0 6px;font-size:13.5px;color:var(--ink2);line-height:1.6}
+.mission .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.mission button{font:inherit;font-size:13.5px;font-weight:700;border-radius:10px;padding:9px 14px;cursor:pointer;border:1.5px solid var(--pri3);background:#fff;color:var(--pri)}.mission button.p{background:var(--pri);color:#fff;border-color:var(--pri)}
+.steps label{display:flex;gap:8px;align-items:center;font-size:13.5px;color:var(--ink);background:var(--bg);border-radius:10px;padding:9px 11px;margin-top:6px}.steps input{width:auto;margin:0}
+.award{max-width:760px;background:#fff;border:1px solid #e3d9b8;padding:34px;text-align:center;position:relative;box-shadow:0 14px 36px rgba(20,24,31,.1)}.award:before{content:"";position:absolute;inset:10px;border:1.5px solid #d9c98f}.award h2{font-size:26px;letter-spacing:.3em;margin:0 0 8px}.award p{margin:4px 0;font-size:14px;color:var(--ink2)}
 </style></head><body><div class="wrap">
 <h1>바로시작 <span style="font-size:14px;color:var(--mut);font-weight:500">시제품</span></h1><div class="sub">국민취업지원제도, 규정은 제가 읽을게요. 금액·기한은 사람이 원문과 대조한 표의 고정값만 씁니다.</div>
-<div class="tabs"><button data-t="t1" class="on">① 시작 대화</button><button data-t="t2">② 내 날짜 일정</button><button data-t="t3">③ 고용24 안내 점검</button></div>
+<div class="tabs"><button data-t="t1" class="on">① 시작 대화</button><button data-t="t2">② 내 날짜 일정</button><button data-t="t4">③ 오늘의 미션</button><button data-t="t3">④ 고용24 안내 점검</button></div>
 <section class="t" id="t2"><div class="syn">시제품 · 실제 신청·제출 기능 없음 · 자격 판정 아님(최종 판단은 고용센터) · 기준: 국민취업지원제도 업무매뉴얼 2026.1, 고용24 안내 2026.10.1</div>
 <div class="form">
   <label>유형<select id="type"><option value="1">Ⅰ유형</option><option value="2">Ⅱ유형</option></select></label>
@@ -42,6 +49,11 @@ table.rp{border-collapse:collapse;width:100%;background:#fff;font-size:13px}tabl
 <section class="t on" id="t1">
 <div class="syn">규칙 기반 시제품 · 대화 이해(LLM)는 개발 기간에 연결 · 자격 판정 아님(최종 판단은 고용센터) · 기준: 고용24 국민취업지원제도 안내 2026.10.1</div>
 <div class="chat" id="chat"></div><div class="res" id="res"></div>
+</section>
+<section class="t" id="t4">
+<div class="syn">규칙 기반 시제품 · 미션은 규정 검증표에서 나옵니다 · 미션 크기 조절(LLM)은 개발 기간에 연결 · 기록은 이 브라우저에만 저장</div>
+<div class="board" id="board"></div><div id="mission"></div>
+<div class="note">회색 자기보고 · 파랑 기록 근거(접수번호·캡처) · 금색 기관 확인. 여섯 개를 다 찍으면 완주 표창이 나옵니다. <a href="#" id="reset">처음부터 다시</a></div>
 </section>
 <section class="t" id="t3">
 <div class="syn">운영자용 · 규정 검증표를 만들다가 찾은 고용24 안내의 어긋난 곳 (2026.10.1 확인)</div>
@@ -138,5 +150,29 @@ function result(){ let h='';
  chat.insertAdjacentHTML('beforeend','<div class="m bot">정리했어요. 아래는 고용24 수급자격 표 기준으로 <b>해당할 수 있는 것</b>이에요. 최종 판단은 고용센터가 해요.</div>');
  $('res').innerHTML=h; $('go2').onclick=()=>document.querySelector('.tabs button[data-t=t2]').click();}
 ask(0);
+
+// ③ 오늘의 미션
+const M=[
+ {t:'취업지원 신청서 내기',why:'신청해야 시작돼요. 서식은 5단계, 3단계에서 고를 값은 ① 시작 대화 결과를 보면 돼요.',src:'<b>고용24</b> 취업지원신청 5단계',steps:['① 시작 대화에서 내 유형 확인하기 (1분)','고용24 로그인하고 신청 화면 열기 (2분)','3단계 값 고르고 제출하기 (5분)']},
+ {t:'취업활동계획 상담 예약하기',why:'통지 다음 날부터 1개월 안에 계획을 세워야 해요.',src:R.iap.src,steps:['예약 문안 읽어 보기 (1분)','가능한 요일 두 개 고르기 (1분)','고용센터에 보내기 (2분)']},
+ {t:'직업설계서 하나 만들기',why:'상담 때 "어떤 일을 하고 싶은지"를 말하기 쉬워져요.',src:'<b>고용24 잡케어</b> 직업 설계서 만들기',steps:['관심 키워드 하나 적기 (1분)','잡케어에서 설계서 만들기 (10분)']},
+ {t:'상담사에게 훈련 요청 보내기',why:'참여자는 상담사를 통해서만 수강신청을 할 수 있어요.',src:'<b>매뉴얼 158쪽</b> "수급(자격)자는 상담사를 통해서만 수강신청 가능"',steps:['요청 문안 읽어 보기 (1분)','내 말투로 한 줄만 고치기 (2분)','상담사에게 보내기 (2분)']},
+ {t:'이번 회차 구직촉진수당 신청하기',why:'자동으로 들어오지 않아요. 지정일에 신청하지 않으면 그 회차는 없어져요.',src:R.miss.src,steps:['이번 달 한 일 세 줄 적기 (3분)','고용24에서 이행보고 작성 (5분)','지급신청서 제출 (2분)']},
+ {t:'다음 지정일 알림 켜기',why:'지급 중단이 3회면 수당이 끝나요. 날짜를 놓치지 않는 게 제일 중요해요.',src:R.stop3.src,steps:['② 내 날짜 일정에 지정일 넣기 (1분)','휴대폰 달력에 D-7, D-1 넣기 (2분)']}
+];
+let S=JSON.parse(localStorage.getItem('baro_stamps')||'[]'), splitOn=false;
+function drawM(){
+ $('board').innerHTML=M.map((m,i)=>`<div class="stamp ${S[i]||''}">${S[i]?(S[i]==='y'?'★':S[i]==='b'?'✓':'·')+'<br>':(i+1)+'<br>'}${m.t.split(' ').slice(0,2).join(' ')}</div>`).join('');
+ const i=S.length; const box=$('mission');
+ if(i>=M.length){ const c={g:0,b:0,y:0}; S.forEach(x=>c[x]++);
+  box.innerHTML=`<div class="award"><h2>완 주 표 창</h2><p>스스로 세운 계획의 미션 여섯 개를 하루에 하나씩</p><p style="font-size:20px;font-weight:800;color:var(--ink);margin:10px 0">끝까지 해냈습니다</p><p>기관 확인 ${c.y} · 기록 근거 ${c.b} · 자기보고 ${c.g}</p><p style="font-size:12px;color:var(--mut);margin-top:12px">바로시작 발행(시제품) · 공식 표창·디지털 배지 연계는 제안 사항</p></div>`; return; }
+ const m=M[i];
+ box.innerHTML=`<div class="mission"><div class="d" style="font-size:12px;font-weight:700;color:var(--pri)">오늘의 미션 ${i+1} / ${M.length}</div><h3>${m.t}</h3><p>${m.why}</p><div class="src">${m.src}</div>
+  ${splitOn?`<p style="margin-top:12px"><b>괜찮아요. 더 작게 나눴어요.</b> 한 칸씩만 해도 돼요.</p><div class="steps">${m.steps.map((x,k)=>`<label><input type="checkbox" data-k="${k}">${x}</label>`).join('')}</div>`:''}
+  <div class="row"><button class="p" data-g="g">했어요</button><button data-g="b">했어요 · 접수번호나 캡처가 있어요</button><button data-g="y">기관이 확인해 줬어요</button>${splitOn?'':'<button id="hard">오늘은 어려워요</button>'}</div></div>`;
+ box.querySelectorAll('button[data-g]').forEach(b=>b.onclick=()=>{S.push(b.dataset.g);localStorage.setItem('baro_stamps',JSON.stringify(S));splitOn=false;drawM()});
+ const h=$('hard'); if(h) h.onclick=()=>{splitOn=true;drawM()};
+}
+$('reset').onclick=e=>{e.preventDefault();S=[];localStorage.removeItem('baro_stamps');splitOn=false;drawM()}; drawM();
 
 </script></body></html>
